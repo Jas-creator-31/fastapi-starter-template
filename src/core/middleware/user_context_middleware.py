@@ -59,15 +59,6 @@ class UserContextMiddleware(BaseHTTPMiddleware):
                             )
                         ),
                     )
-                context = UserContext(
-                    user_id=decoded_token.sub,
-                    user_roles=value[
-                        "user_roles"
-                    ],
-                    role_permissions=value[
-                        "role_permissions"
-                    ],
-                )
             except Exception as e:
                 logger.error(
                     f"Auth middleware failed: {e}"

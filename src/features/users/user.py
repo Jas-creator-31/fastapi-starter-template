@@ -13,6 +13,6 @@ class User:
         self.data = user
 
     async def verify_password(self, password: str):
-        logger.info("varify_password triggered")
+        logger.info("verify_password triggered")
         if self.data:
             return await verify_hash(password, self.data.password_hash)
