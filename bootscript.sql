@@ -1,0 +1,1 @@
+insert into app_users values ("<USERNAME>", "<EMAIL>", "<PASSWORD>")

@@ -1,0 +1,13 @@
+# .gitignore
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+.env
+*-key.pem
+*.pem
+.idea
+.idea/inspectionProfiles
+app.log
+radar_metrics.db

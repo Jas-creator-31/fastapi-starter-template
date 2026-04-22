@@ -1,0 +1,26 @@
+# Dependency directories (The biggest speed killer!)
+.venv
+
+
+# Build outputs
+dist
+build
+.next
+out
+
+# Git and IDE settings
+.git
+.gitignore
+.vscode
+.idea
+.DS_Store
+
+# Sensitive environment variables
+.env
+.env.local
+.env.development.local
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore
