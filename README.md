@@ -4,12 +4,7 @@ A production-ready, high-performance architectural foundation for FastAPI applic
 
 This isn't just a "Hello World" example. It is a deeply thought-out structure incorporating **Clean Architecture**, **RBAC (Role-Based Access Control)**, **Redis-backed Session Management**, and **Async SQLAlchemy**.
 
-## 📖 The Story
-I started building this template when I was **14 years old** to solve a recurring problem: setting up a secure, scalable backend from scratch is repetitive and error-prone. Over the course of about **30 hours** of focused development—finishing just after my **15th birthday**—I built this to serve as a "Gold Standard" for my future projects.
-
 It focuses on **Security-First** principles, using Argon2 for hashing, JWT rotation, and strict context management.
-
----
 
 ## ✨ Key Features
 - **Modern Auth:** JWT-based authentication with Refresh Token rotation.
