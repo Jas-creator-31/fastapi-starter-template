@@ -20,6 +20,7 @@ It focuses on **Security-First** principles, using Argon2 for hashing, JWT rotat
 ## 🛠️ Getting Started
 
 This project uses [**uv**](https://github.com/astral-sh/uv), the ultra-fast Python package manager.
+for local https development you can use [**mkcert**](https://github.com/filosottilemkcert)
 
 ### 1. Installation
 First, install `uv` if you haven't already, then set up the environment:
