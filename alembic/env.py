@@ -1,32 +1,22 @@
 import asyncio
 from logging.config import fileConfig
-from pathlib import Path
-from settings import (
-    db_username,
-    db_secret_key,
-    db_host,
-    db_port,
-    db_name
-)
+from settings import settings
 from alembic import context
 from sqlalchemy import pool, text
-from sqlalchemy.engine import Connection
+from sqlalchemy.engine import Connection, URL
 from sqlalchemy.ext.asyncio import create_async_engine
-from dotenv import load_dotenv
 
-current_file_path = Path(__file__).resolve()
-project_root = current_file_path.parent.parent
-dotenv_path = project_root / ".env"
-
-if not dotenv_path.exists():
-    print(f"CRITICAL: .env file not found at {dotenv_path}")
-load_dotenv(dotenv_path, override=True)
-
-DATABASE_URL = f"postgresql+asyncpg://{db_username}:{db_secret_key}@{db_host}:{db_port}/{db_name}"
+DATABASE_URL = URL.create(
+    drivername="postgresql+asyncpg",
+    username=settings.db_username,
+    password=settings.db_secret_key.get_secret_value(),
+    host=settings.db_host,
+    port=settings.db_port,
+    database=settings.db_name,
+)
 
 print("--- DEBUG: ENV LOADING ---")
-print(f"Project Root: {project_root}")
-print(f"Connecting as: {db_username} to {db_host}:{db_port}/{db_name}")
+print(f"Connecting as: {settings.db_username} to {settings.db_host}:{settings.db_port}/{settings.db_name}")
 print("--------------------------")
 
 from src.db.base import Base  # noqa: E402
@@ -45,9 +35,7 @@ print("--------------------------------------------")
 
 def do_run_migrations(connection: Connection) -> None:
     connection.execute(text("SET search_path TO public"))
-
-    db_name = connection.execute(text("SELECT current_database()")).scalar()
-    print(f"--- DEBUG 2: DATABASE CONNECTION SUCCESSFUL: {db_name} ---")
+    print(f"--- DEBUG 2: DATABASE CONNECTION SUCCESSFUL: {settings.db_name} ---")
 
     context.configure(
         connection=connection,
@@ -75,9 +63,8 @@ async def run_async_migrations() -> None:
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode (for --sql)."""
-    url = DATABASE_URL.replace("%", "%%")
     context.configure(
-        url=url,
+        url=DATABASE_URL,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},

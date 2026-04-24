@@ -1,22 +1,62 @@
-import os 
-from dotenv import load_dotenv
+from pydantic_settings import (
+    BaseSettings,
+    SettingsConfigDict,
+    
+)
+from pydantic import (
+    Field,
+    SecretStr
+)
 
-load_dotenv()
+class Settings(BaseSettings):
+    self_url: str = Field(
+        validation_alias="SELF_URL"
+    )
 
-self_url = os.getenv("SELF_URL", "")
+    db_driver: str = Field(
+        validation_alias="DB_DRIVER"
+    )
+    db_username: str = Field(
+        validation_alias="DB_USERNAME"
+    )
+    db_secret_key: SecretStr = Field(
+        validation_alias="DB_SECRET_KEY"
+    )
+    db_host: str = Field(
+        validation_alias="DB_HOST"
+    )
+    db_port: int = Field(
+        validation_alias="DB_PORT"
+    )
+    db_name: str = Field(
+        validation_alias="DB_NAME"
+    )
 
-db_driver_name = "postgresql+asyncpg" # default
-db_username = os.getenv("DB_USERNAME", "")
-db_secret_key = os.getenv("DB_SECRET_KEY", "")
-db_host = os.getenv("DB_HOST", "")
-db_port = int(os.getenv("DB_PORT", ""))
-db_name = os.getenv("DB_NAME", "")
+    # Redis
+    redis_host: str = Field(
+        validation_alias="REDIS_HOST"
+    )
+    redis_port: int = Field(
+        validation_alias="REDIS_PORT"
+    )
+    redis_db: int = Field(
+        validation_alias="REDIS_DB"
+    )
 
-redis_host = os.getenv("REDIS_HOST", "")
-redis_port = int(os.getenv("REDIS_PORT", ""))
-redis_db = int(os.getenv("REDIS_DB", ""))
+    # JWT and others
+    jwt_algorithm: str = "HS256"
+    jwt_secret: SecretStr = Field(
+        validation_alias="JWT_SECRET_KEY"
+    )
+    csrf_key: SecretStr = Field(
+        validation_alias="CSRF_SECRET_KEY"
+    )
 
-jwt_algorithm = "<JwtAlgorithm>"
-jwt_secret = os.getenv("JWT_SECRET_KEY", "")
+    model_config = SettingsConfigDict(
+        case_sensitive=True,
+        env_file=".env",
+        env_file_encoding="utf-8",
+        # extra="forbid",  # Raises error if extra vars are in .env
+    )
 
-csrf_key = os.getenv("CSRF_SECRET_KEY", "")
+settings = Settings() # type: ignore

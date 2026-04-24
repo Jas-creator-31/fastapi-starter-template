@@ -1,12 +1,12 @@
 from redis import asyncio as redis
-from settings import redis_host, redis_db, redis_port
+from settings import settings
 
 
 async def get_redis():
     r = redis.Redis(
-        host=redis_host,
-        port=redis_port,
-        db=redis_db,
+        host=settings.redis_host,
+        port=settings.redis_port,
+        db=settings.redis_db,
         decode_responses=True,
     )
     await r.config_set("save", "900 1 300 10 60 10000")

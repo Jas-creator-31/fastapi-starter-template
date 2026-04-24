@@ -1,14 +1,7 @@
 import logging
 
 from sqlalchemy import create_engine
-from settings import (
-    db_driver_name,
-    db_username,
-    db_secret_key,
-    db_host,
-    db_port,
-    db_name,
-)
+from settings import settings
 from sqlalchemy.ext.asyncio import (
     create_async_engine,
     async_sessionmaker,
@@ -29,12 +22,12 @@ logger = logging.getLogger(__name__)
 try:
     logger.info("trying to create a database URL")
     database_url = URL.create(
-        drivername=db_driver_name,
-        username=db_username,
-        password=db_secret_key,
-        host=db_host,
-        port=db_port,
-        database=db_name,
+        drivername=settings.db_driver,
+        username=settings.db_username,
+        password=settings.db_secret_key.get_secret_value(),
+        host=settings.db_host,
+        port=settings.db_port,
+        database=settings.db_name,
     )
 except Exception as e:
     logger.exception(
@@ -48,7 +41,7 @@ try:
     engine: AsyncEngine = create_async_engine(
         database_url
     )
-    radar_engine = create_engine("sqlite:///radar_metrics.db")
+    radar_engine = create_engine("sqlite:///radar_metrics.settings.db")
     logger.info("database engine successfully created")
 except SQLAlchemyError as e:
     logger.exception(

@@ -15,7 +15,7 @@ from src.core.context.request_context import RequestContext, request_metadata_co
 from src.core.context.user_context import UserContext, user_context
 from src.features.auth.models import UserAgentInfo
 from src.features.auth.services.token_service import TokenService
-from settings import csrf_key
+from settings import settings
 from src.core.middleware.request_context_middleware import RequestContextMiddleware
 from src.core.middleware.user_context_middleware import UserContextMiddleware
 
@@ -57,15 +57,15 @@ def register_middleware(app: FastAPI):
     app.add_middleware(
         SlowAPIMiddleware
     )
-    # app.add_middleware(
-    #     CSRFMiddleware,
-    #     secret=csrf_key,
-    #     cookie_name="fastapi-csrf-token",
-    #     cookie_secure=True,
-    #     cookie_httponly=True,
-    #     cookie_samesite="lax",
-    #     header_name="X-CSRF-Token",
-    # )
+    app.add_middleware(
+        CSRFMiddleware,
+        secret=settings.csrf_key.get_secret_value(),
+        cookie_name="fastapi-csrf-token",
+        cookie_secure=True,
+        cookie_httponly=True,
+        cookie_samesite="lax",
+        header_name="X-CSRF-Token",
+    )
     app.add_middleware(ProxyHeadersMiddleware)
     app.add_middleware(
         TrustedHostMiddleware, 

@@ -8,11 +8,7 @@ from jwt.exceptions import (
     InvalidTokenError,
 )
 
-from settings import (
-    jwt_algorithm,
-    jwt_secret,
-    self_url,
-)
+from settings import settings
 from src.core.errors.domain_errors import (
     ExpiredJwtSignatureError,
     InvalidJwtSignatureError,
@@ -53,8 +49,8 @@ class TokenService:
             + timedelta(seconds=exp_time),
             "type": type,
             "sid": str(sid),
-            "iss": self_url,
-            "aud": self_url,
+            "iss": settings.self_url,
+            "aud": settings.self_url,
             "jti": str(uuid4()),
         }
 
@@ -77,10 +73,10 @@ class TokenService:
         )
 
         access_token = jwt.encode(
-            access, jwt_secret, jwt_algorithm
+            access, settings.jwt_secret.get_secret_value(), settings.jwt_algorithm
         )
         refresh_token = jwt.encode(
-            refresh, jwt_secret, jwt_algorithm
+            refresh, settings.jwt_secret.get_secret_value(), settings.jwt_algorithm
         )
 
         hashed_refresh_token = await hash(
@@ -110,8 +106,8 @@ class TokenService:
     async def decode_token(self, token):
         decoded_token = jwt.decode(
             token, 
-            jwt_secret, 
-            algorithms=jwt_algorithm,
-            audience=self_url
+            settings.jwt_secret.get_secret_value(), 
+            algorithms=settings.jwt_algorithm,
+            audience=settings.self_url
         )  # type: ignore
         return Token(**decoded_token)
