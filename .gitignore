@@ -10,4 +10,4 @@ __pycache__/
 .idea
 .idea/inspectionProfiles
 *.log
-radar_metrics.db
+*.db
