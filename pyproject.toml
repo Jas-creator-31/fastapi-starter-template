@@ -27,6 +27,7 @@ dependencies = [
     "fastapi-cache2>=0.2.2",
     "fastapi-cli==0.0.20",
     "fastapi-cloud-cli==0.11.0",
+    "fastapi-guard>=5.2.0",
     "fastapi-radar>=0.3.4",
     "fastar==0.8.0",
     "greenlet==3.3.0",

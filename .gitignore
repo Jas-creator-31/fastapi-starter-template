@@ -9,5 +9,5 @@ __pycache__/
 *.pem
 .idea
 .idea/inspectionProfiles
-app.log
+*.log
 radar_metrics.db

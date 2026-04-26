@@ -5,7 +5,6 @@ argon2-cffi
 slowapi
 pyjwt[crypto]
 user-agents
-loguru
 pytest
 certifi==2026.1.4
 click==8.3.1
@@ -56,10 +55,10 @@ watchfiles==1.1.1
 websockets==16.0
 testcontainers[postgres]
 redis[hiredis]==7.4.0
-sqladmin-ng[full]==0.25.0
 asgi-correlation-id
 prometheus-fastapi-instrumentator
 starlette_csrf
 fastapi_cache2
 fastapi_radar
 pytz
+fastapi_guard
