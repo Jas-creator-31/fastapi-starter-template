@@ -7,6 +7,7 @@ dist
 build
 .next
 out
+__pycache__/
 
 # Git and IDE settings
 .git
