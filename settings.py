@@ -20,7 +20,7 @@ class Settings(BaseSettings):
         validation_alias="DB_USERNAME"
     )
     db_secret_key: SecretStr = Field(
-        validation_alias="DB_SECRET_KEY"
+        validation_alias="DB_PASSWORD"
     )
     db_host: str = Field(
         validation_alias="DB_HOST"
